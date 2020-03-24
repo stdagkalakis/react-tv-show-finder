@@ -18,7 +18,7 @@ class App extends Component {
     loading: false,
     shows: [],
     show: {},
-    episodes: [],
+    seasons: [],
     alert: null,
     authStr: 'Bearer ' + process.env.REACT_APP_TVDB_JWT
   };
@@ -65,20 +65,19 @@ class App extends Component {
     this.setState({ show: res.data.data, loading: false });
   };
 
-  // Get show details.
-  getShowEpisodes = async id => {
+  // Get show seasons.
+  getShowSeasons = async id => {
     this.setState({ loading: true });
 
     const res = await axios
-      .get(`/series/${id}/episodes`, {
+      .get(`/series/${id}/episodes/summary`, {
         headers: { Authorization: this.state.authStr, crossdomain: true }
       })
       .catch(error => {
         console.log('error 3 ' + error);
       });
 
-    // console.log(res.data.data);
-    this.setState({ episodes: res.data.data, loading: false });
+    this.setState({ seasons: res.data.data, loading: false });
   };
 
   //=============================================
@@ -113,8 +112,8 @@ class App extends Component {
   //=============================================
 
   render() {
-    const { shows, show, loading, alert, episodes } = this.state;
-    console.log('In App ');
+    const { shows, show, loading, alert, seasons } = this.state;
+
     return (
       <Router>
         <div className='App'>
@@ -141,10 +140,10 @@ class App extends Component {
                   <Show
                     {...props}
                     getShow={this.getShow}
-                    getShowEpisodes={this.getShowEpisodes}
+                    getShowSeasons={this.getShowSeasons}
                     show={show}
                     loading={loading}
-                    episodes={episodes}
+                    seasons={seasons}
                   />
                 )}
               />

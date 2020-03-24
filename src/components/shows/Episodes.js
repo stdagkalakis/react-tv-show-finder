@@ -1,26 +1,33 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
+import Season from './Season';
 
-export class Episodes extends Component {
+class Episodes extends Component {
   static propTypes = {
-    episodes: PropTypes.array.isRequired,
-    loading: PropTypes.bool.isRequired
+    id: PropTypes.string.isRequired,
+    airedSeasons: PropTypes.array.isRequired
   };
+
+  componentDidMount() {
+    this.props.airedSeasons.sort((a, b) =>
+      parseInt(a) < parseInt(b) ? -1 : 1
+    );
+  }
   render() {
-    const { episodes, loading } = this.props;
-    console.log(episodes.length);
+    const loading = false;
+    const { airedSeasons, id } = this.props;
+
     if (loading) {
       return <Spinner />;
     } else {
       return (
-        <div className='card'>
-          <ul>
-            {episodes.map((s, i) => (
-              <li key={s.id}>{s.episodeName}</li>
+        <Fragment>
+          {airedSeasons &&
+            airedSeasons.map((seasonNum, i) => (
+              <Season key={i} id={id} seasonNum={seasonNum} />
             ))}
-          </ul>
-        </div>
+        </Fragment>
       );
     }
   }

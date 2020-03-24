@@ -7,14 +7,14 @@ import Episodes from './Episodes';
 export class Show extends Component {
   componentDidMount() {
     this.props.getShow(this.props.match.params.id);
-    this.props.getShowEpisodes(this.props.match.params.id);
+    this.props.getShowSeasons(this.props.match.params.id);
   }
 
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     show: PropTypes.object.isRequired,
     getShow: PropTypes.func.isRequired,
-    getShowEpisodes: PropTypes.func.isRequired
+    getShowSeasons: PropTypes.func.isRequired
   };
 
   render() {
@@ -29,8 +29,9 @@ export class Show extends Component {
       rating,
       overview
     } = this.props.show;
+    const { id } = this.props.match.params;
+    const { loading, seasons } = this.props;
 
-    const { loading, episodes } = this.props;
     if (loading) return <Spinner />;
     else {
       return (
@@ -134,7 +135,9 @@ export class Show extends Component {
             </div>
           </div>
           {/* Card with Seasons/ Episodes */}
-          <Episodes episodes={episodes} loading={loading} />
+          {seasons.airedSeasons && (
+            <Episodes id={id} airedSeasons={seasons.airedSeasons} />
+          )}
         </Fragment>
       );
     }
