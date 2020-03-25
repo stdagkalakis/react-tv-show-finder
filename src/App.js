@@ -25,21 +25,24 @@ class App extends Component {
 
   // Search shows by text
   searchShows = async text => {
-    this.setState({ loading: true });
-    const res = await axios
+    this.setState({ loading: true, seasons: [] });
+    axios
       .get(`/search/series?name=${text}`, {
         headers: { Authorization: this.state.authStr, crossdomain: true }
       })
+      .then(response => {
+        this.setState({ shows: response.data.data, loading: false });
+      })
       .catch(error => {
-        console.log('error 3 ' + error);
+        console.log(error);
+        this.setState({ loading: false });
+        this.setAlert(error.message, 'dark');
       });
-
-    this.setState({ shows: res.data.data, loading: false });
   };
 
   // Clear shows search results
   clearShows = () => {
-    this.setState({ shows: [], loading: false });
+    this.setState({ shows: [], loading: false, seasons: [] });
   };
 
   // set alert using message and a type to attach from css
@@ -54,60 +57,67 @@ class App extends Component {
   getShow = async id => {
     this.setState({ loading: true });
 
-    const res = await axios
+    axios
       .get(`/series/${id}`, {
         headers: { Authorization: this.state.authStr, crossdomain: true }
       })
+      .then(response => {
+        this.setState({ show: response.data.data, loading: false });
+      })
       .catch(error => {
-        console.log('error 3 ' + error);
+        console.log(error);
+        this.setState({ loading: false });
+        this.setAlert(error.message, 'dark');
       });
-
-    this.setState({ show: res.data.data, loading: false });
   };
 
   // Get show seasons.
   getShowSeasons = async id => {
-    this.setState({ loading: true });
+    this.setState({ loading: true, seasons: [] });
 
-    const res = await axios
+    axios
       .get(`/series/${id}/episodes/summary`, {
         headers: { Authorization: this.state.authStr, crossdomain: true }
       })
+      .then(response => {
+        this.setState({ seasons: response.data.data, loading: false });
+      })
       .catch(error => {
-        console.log('error 3 ' + error);
+        console.log(error);
+        this.setState({ loading: false });
+        this.setAlert(error.message, 'dark');
       });
-
-    this.setState({ seasons: res.data.data, loading: false });
   };
 
   //=============================================
   // Get image src from server (not working)
   //=============================================
-  getSrc = async image => {
-    axios
-      .get(
-        `/banners/${image}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + process.env.REACT_APP_TVDB_JWT,
-            crossdomain: true
-          }
-        },
-        { responseType: 'arraybuffer' }
-      )
-      .then(response => {
-        const base64 = btoa(
-          new Uint8Array(response.data).reduce(
-            (data, byte) => data + String.fromCharCode(byte),
-            ''
-          )
-        );
-        this.setState({ source: 'data:;base64,' + base64 });
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
+  // getSrc = async image => {
+  //   axios
+  //     .get(
+  //       `/banners/${image}`,
+  //       {
+  //         headers: {
+  //           Authorization: 'Bearer ' + process.env.REACT_APP_TVDB_JWT,
+  //           crossdomain: true
+  //         }
+  //       },
+  //       { responseType: 'arraybuffer' }
+  //     )
+  //     .then(response => {
+  //       const base64 = btoa(
+  //         new Uint8Array(response.data).reduce(
+  //           (data, byte) => data + String.fromCharCode(byte),
+  //           ''
+  //         )
+  //       );
+  //       this.setState({ source: 'data:;base64,' + base64 });
+  //     })
+  //     .catch(e => {
+  //       console.log('===========');
+  //       console.log(e);
+  //     });
+  // };
 
   //=============================================
 

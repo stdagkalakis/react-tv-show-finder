@@ -34,6 +34,7 @@ export class Show extends Component {
 
     if (loading) return <Spinner />;
     else {
+      console.log(poster);
       return (
         <Fragment>
           <Link to='/' className='btn btn-light'>
@@ -41,27 +42,31 @@ export class Show extends Component {
           </Link>
           {/* Card Show with details  */}
           <div className='card grid-2'>
+            <Fragment>
+              {poster && (
+                <img
+                  src={'https://www.thetvdb.com/banners/' + poster}
+                  alt='Try'
+                />
+              )}
+            </Fragment>
+
             <div>
-              <Fragment>
-                {poster && <i src={poster} alt=''></i>}
-                <h2>{seriesName}</h2>
-                {genre && (
-                  <Fragment>
-                    {genre.map((g, i) => (
-                      <div key={i} className='badge'>
-                        {g}
-                      </div>
-                    ))}
-                  </Fragment>
-                )}
-              </Fragment>
-            </div>
-            <div>
+              <h2>{seriesName}</h2>
+              {genre && (
+                <Fragment>
+                  {genre.map((g, i) => (
+                    <div key={i} className='badge'>
+                      {g}
+                    </div>
+                  ))}
+                </Fragment>
+              )}
               <ul
                 className='grid-2'
                 style={{
                   borderBottom: ' 1px dotted lightgrey',
-                  paddingBottom: '10px'
+                  padding: '10px'
                 }}
               >
                 {status && (

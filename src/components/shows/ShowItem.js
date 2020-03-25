@@ -17,12 +17,7 @@ const ShowItem = ({
 }) => {
   return (
     <div className='card text-center'>
-      <img
-        src={image}
-        alt=''
-        className='round-img'
-        style={{ width: '60px ' }}
-      />
+      {image && <img src={'https://www.thetvdb.com' + image} alt='Try' />}
       <h2>{seriesName}</h2>
       <ul>
         <li>
