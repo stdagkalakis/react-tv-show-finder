@@ -2,7 +2,14 @@ import React, { Fragment, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
 const Episode = ({
-  episode: { episodeName, contentRating, firstAired, directors, overview }
+  episode: {
+    episodeName,
+    contentRating,
+    firstAired,
+    directors,
+    overview,
+    poster
+  }
 }) => {
   // Modal handlers.
   const [show, setShow] = useState(false);
@@ -53,7 +60,7 @@ const Episode = ({
             {poster && (
               <img
                 src={'https://www.thetvdb.com/banners/' + poster}
-                alt='Try'
+                alt='Poaster'
               />
             )}
           </Fragment>

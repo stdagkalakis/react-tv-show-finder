@@ -26,15 +26,18 @@ export class Show extends Component {
       airsDayOfWeek,
       airsTime,
       genre,
-      rating,
+      siteRating,
       overview
     } = this.props.show;
     const { id } = this.props.match.params;
     const { loading, seasons } = this.props;
-
+    // Stars
+    let stars = [];
+    for (let i = 0; i < siteRating; i++) {
+      stars.push(<i key={i} className='fas fa-star' />);
+    }
     if (loading) return <Spinner />;
     else {
-      console.log(poster);
       return (
         <Fragment>
           <Link to='/' className='btn btn-light'>
@@ -113,11 +116,11 @@ export class Show extends Component {
                   </li>
                 )}
 
-                {rating && (
+                {siteRating && (
                   <li>
                     <Fragment>
                       <strong>Rating: </strong>
-                      {rating}
+                      {stars}
                     </Fragment>
                   </li>
                 )}

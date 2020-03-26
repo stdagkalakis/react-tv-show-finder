@@ -23,7 +23,7 @@ export class Search extends Component {
       this.props.setAlert('Please enter something', 'light');
     } else {
       this.props.searchShows(this.state.text);
-      this.setState({ text: '' });
+      // this.setState({ text: '' });
     }
   };
 

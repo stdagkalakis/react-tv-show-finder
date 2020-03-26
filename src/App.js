@@ -62,6 +62,7 @@ class App extends Component {
         headers: { Authorization: this.state.authStr, crossdomain: true }
       })
       .then(response => {
+        // console.log(response.data.data)
         this.setState({ show: response.data.data, loading: false });
       })
       .catch(error => {
@@ -88,36 +89,6 @@ class App extends Component {
         this.setAlert(error.message, 'dark');
       });
   };
-
-  //=============================================
-  // Get image src from server (not working)
-  //=============================================
-  // getSrc = async image => {
-  //   axios
-  //     .get(
-  //       `/banners/${image}`,
-  //       {
-  //         headers: {
-  //           Authorization: 'Bearer ' + process.env.REACT_APP_TVDB_JWT,
-  //           crossdomain: true
-  //         }
-  //       },
-  //       { responseType: 'arraybuffer' }
-  //     )
-  //     .then(response => {
-  //       const base64 = btoa(
-  //         new Uint8Array(response.data).reduce(
-  //           (data, byte) => data + String.fromCharCode(byte),
-  //           ''
-  //         )
-  //       );
-  //       this.setState({ source: 'data:;base64,' + base64 });
-  //     })
-  //     .catch(e => {
-  //       console.log('===========');
-  //       console.log(e);
-  //     });
-  // };
 
   //=============================================
 
