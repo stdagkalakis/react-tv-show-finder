@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export class Search extends Component {
   state = {
@@ -18,6 +19,7 @@ export class Search extends Component {
   };
 
   onSubmit = e => {
+    // console.log('firerd submit');
     e.preventDefault();
     if (this.state.text === '') {
       this.props.setAlert('Please enter something', 'light');
@@ -39,11 +41,19 @@ export class Search extends Component {
             value={this.state.text}
             onChange={this.onChange}
           />
-          <input
+          {/* <input
             type='submit'
             value='Search'
             className='btn btn-dark btn-block'
-          />
+          // /> */}
+          <Link
+            to={`/${this.state.text}`}
+            type='submit'
+            value='Search'
+            className=' btn ten-dark btn-block'
+          >
+            Search
+          </Link>
         </form>
         {showClear && (
           <button className='btn btn-light btn-block' onClick={clearShows}>

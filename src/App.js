@@ -102,17 +102,21 @@ class App extends Component {
           <div className='container'>
             <Alert alert={alert} />
             <Switch>
-              <Route exact path='/'>
-                <Fragment>
-                  <Search
-                    searchShows={this.searchShows}
-                    clearShows={this.clearShows}
-                    showClear={shows.length > 0 ? true : false}
-                    setAlert={this.setAlert}
-                  />
-                  <Shows loading={loading} shows={shows} />
-                </Fragment>
-              </Route>
+              <Route
+                path='/:text?'
+                render={({ match }) => (
+                  <Fragment>
+                    <Search
+                      searchShows={this.searchShows}
+                      clearShows={this.clearShows}
+                      showClear={shows.length > 0 ? true : false}
+                      setAlert={this.setAlert}
+                    />
+
+                    <Shows match={match} loading={loading} />
+                  </Fragment>
+                )}
+              ></Route>
               <Route exact path='/about' component={About} />
               <Route
                 exact
